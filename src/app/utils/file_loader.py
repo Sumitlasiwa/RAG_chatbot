@@ -1,11 +1,11 @@
 from langchain_community.document_loaders import PyPDFLoader, TextLoader 
 import os
-from langchain_core.documents import Documnets
+from langchain_core.documents import Document
 from typing import List
 
 file_name = r"C:\Users\Lenovo\Desktop\Chatbot\notebooks\DM.pdf"
 
-def load_file(file_path: str) -> List[Documnets]:
+def load_file(file_path: str) -> List[Document]:
     """
     load document content along with metadata
 
