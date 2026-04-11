@@ -3,7 +3,6 @@ import os
 from langchain_core.documents import Document
 from typing import List
 
-file_name = r"C:\Users\Lenovo\Desktop\Chatbot\notebooks\DM.pdf"
 
 def load_file(file_path: str) -> List[Document]:
     """
@@ -20,7 +19,7 @@ def load_file(file_path: str) -> List[Document]:
         raise FileNotFoundError(f"File not found: {file_path}")
     
     # check file extension
-    ext = os.path.splitext(file_name)[1].lower()
+    ext = os.path.splitext(file_path)[1].lower()
 
     if ext == ".pdf":
         loader = PyPDFLoader(file_path=file_path)

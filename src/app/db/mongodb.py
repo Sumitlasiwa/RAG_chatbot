@@ -1,30 +1,20 @@
+from functools import lru_cache
+from src.app.config import MONGODB_URI as uri
 from pymongo import MongoClient
-from dotenv import load_dotenv
 
-import os 
 
-load_dotenv()
-
-uri = os.getenv("MOGODB_URI")
-try:
-    client = MongoClient(uri)
-
-    # Test connection
-    print("Successfully connected!")
-
-except Exception as e:
-    print("Connection failed:", e)
+@lru_cache(maxsize=1)
+def get_mongodb_collection():
     
-
-db = client["doc_database"]
-collection = db["metadata"]
-
-print(client.list_database_names())
-
-
-# store only document-level info in MongoDB
-def save_metadata(metadata):
-    collection.insert_one(metadata)
+    if not uri:
+        raise ValueError("MongoDB_URI is not configured")
     
-def get_metadata():
-    pass
+    try:
+        client = MongoClient(uri)
+        db = client["doc_database"]
+        return db["metadata"]
+
+
+    except Exception as e:
+        raise ConnectionError(f"Failed to connect to MongoDB: {e}") 
+            
