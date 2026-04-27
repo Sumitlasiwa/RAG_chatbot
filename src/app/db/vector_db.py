@@ -2,20 +2,22 @@ from functools import lru_cache
 from pinecone import ServerlessSpec, Pinecone
 from langchain_pinecone import PineconeVectorStore
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from src.app.config import EMBEDDING_MODEL_NAME, PINECONE_INDEX_NAME, PINECONE_TOKEN
+from app.config import get_settings
 
-
+settings = get_settings()
+@lru_cache(maxsize=1)
+def get_embedding_model():
+    return HuggingFaceEmbeddings(
+model_name=settings.embedding_model_name)
+    
 @lru_cache(maxsize=1)
 def get_vectorstore():
+    pc = Pinecone(api_key=settings.pinecone_token)
     
-    embedding_model = HuggingFaceEmbeddings(
-model_name=EMBEDDING_MODEL_NAME)
-    pc = Pinecone(api_key=PINECONE_TOKEN)
-    
-    if PINECONE_INDEX_NAME not in pc.list_indexes().names():
+    if settings.pinecone_index_name not in pc.list_indexes().names():
         pc.create_index(
-            PINECONE_INDEX_NAME,
-            dimension=384,
+            settings.pinecone_index_name,
+            dimension=settings.embedding_dimension,
             metric="cosine",
             spec=ServerlessSpec(
                 cloud="aws",
@@ -24,13 +26,13 @@ model_name=EMBEDDING_MODEL_NAME)
             )
 
     # connect
-    index = pc.Index(PINECONE_INDEX_NAME)
+    index = pc.Index(settings.pinecone_index_name)
 
     
     
     vector_store = PineconeVectorStore(
         index=index,
-        embedding=embedding_model,
+        embedding=get_embedding_model(),
         text_key="text"
     )
 

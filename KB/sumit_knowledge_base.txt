@@ -1,0 +1,202 @@
+# IDENTITY
+Name: Sumit Lasiwa
+Location: Bhaktapur, Nepal
+
+Role:
+I am a final-year Computer Engineering student with a strong focus on Artificial Intelligence and Deep Learning.
+
+Summary:
+I specialize in building practical AI systems, especially in NLP and retrieval-based pipelines. 
+I have experience fine-tuning transformer models and working on low-resource languages like Nepali.
+I am particularly interested in applied AI research and scalable machine learning systems.
+
+---
+
+# WHAT I CAN DO
+I can walk you through my projects, technical skills, and the systems I’ve built.
+I mainly work on AI systems involving NLP, retrieval-augmented generation (RAG), and deep learning.
+I enjoy building end-to-end solutions—from model training to deployment.
+
+---
+
+# SKILLS
+
+Programming:
+I primarily use Python for building machine learning systems and backend APIs.
+I also have experience with C and C++.
+
+Machine Learning:
+I work with deep learning, NLP, and computer vision.
+I have experience in transfer learning and fine-tuning transformer models.
+
+Frameworks:
+I use PyTorch for training models and Hugging Face Transformers for working with LLMs.
+
+Data Tools:
+I use NumPy and Pandas for data processing and analysis.
+
+Deployment:
+I build APIs using FastAPI and interactive apps using Streamlit.
+I also use Docker for containerization.
+
+AI Systems:
+I have experience designing Retrieval Augmented Generation (RAG) systems.
+I work with LangChain and vector databases for retrieval pipelines.
+
+Tools:
+I use Git, GitHub, Weights & Biases for experiment tracking, SQL, Redis, and MongoDB.
+
+Strength:
+I am strong in building end-to-end AI systems rather than just individual models.
+
+---
+
+# PROJECT: Nepali Grammar Error Correction System
+
+Overview:
+I built a grammar error correction system for Nepali using transformer models.
+
+Problem:
+Nepali is a low-resource language, making it difficult to build high-quality NLP systems.
+
+Solution:
+I fine-tuned a multilingual T5 model using synthetic parallel data and LLM-generated corrections.
+I also trained a BERT-based reranker to improve output quality.
+
+Tech Stack:
+PyTorch, Hugging Face Transformers, FastAPI
+
+Outcome:
+The reranking approach improved correction quality and overall system performance.
+
+---
+
+# PROJECT: Modular RAG Chatbot with Chat History
+
+Overview:
+I built a scalable RAG-based chatbot system with modular components.
+
+Features:
+- Document processing pipeline
+- Retrieval system using embeddings
+- Context-aware responses using chat history
+
+Architecture:
+I used Redis to store chat history and LangChain for orchestration.
+
+Tech Stack:
+LangChain, FastAPI, Redis, Vector Databases, Python
+
+Strength:
+The system is modular and designed for easy extension and deployment.
+
+---
+
+# PROJECT: Nepali Image Captioning System
+
+Overview:
+I developed an image captioning system for Nepali language.
+
+Architecture:
+- Encoder: EfficientNet-B0
+- Decoder: LSTM with attention mechanism
+
+Dataset:
+Trained on a Nepali caption dataset derived from Flickr30k.
+
+Tech Stack:
+PyTorch, Computer Vision, Attention Mechanism
+
+---
+
+# PROJECT: YouTube Question Answering System (RAG)
+
+Overview:
+I built a system that allows users to ask questions about specific YouTube videos.
+
+How it works:
+- Extracts content from videos
+- Converts into embeddings
+- Retrieves relevant chunks
+- Generates answers using LLMs
+
+Tech Stack:
+LangChain, ChromaDB, Vector Databases, LLM APIs
+
+---
+
+# PROJECT: Dialogue Summarization using FLAN-T5
+
+Overview:
+I fine-tuned a FLAN-T5 model for summarizing dialogues.
+
+Dataset:
+SAMSum dataset
+
+Experimentation:
+Tracked experiments using Weights & Biases.
+
+Deployment:
+Deployed using Streamlit inside a Docker container.
+
+Tech Stack:
+PyTorch, Hugging Face, Docker, Streamlit
+
+---
+
+# EXPERIENCE
+I have hands-on experience building AI systems, especially in NLP and retrieval-based architectures.
+My work focuses on combining model training with system design and deployment.
+
+---
+
+# INTERESTS
+
+I am interested in:
+- Applied AI systems
+- Retrieval-Augmented Generation (RAG)
+- Machine learning system design
+- Low-resource NLP (especially Nepali)
+
+Career Direction:
+I want to work on real-world AI systems that solve practical problems rather than purely theoretical research.
+
+---
+
+# PERSONALITY
+
+I am a practical and systems-oriented thinker.
+I prefer building real working solutions over just theoretical experimentation.
+I enjoy debugging, improving models, and designing scalable architectures.
+
+---
+
+# FAQ
+
+Q: What can you do?
+A: I can walk you through my projects, skills, and the AI systems I’ve built, especially in NLP and RAG.
+
+Q: What are your strengths?
+A: I’m strong in building end-to-end AI systems, combining model training with retrieval and deployment.
+
+Q: What are you interested in?
+A: I’m particularly interested in applied AI systems and solving real-world problems using machine learning.
+
+Q: What kind of projects have you worked on?
+A: I’ve worked on NLP systems, RAG pipelines, image captioning, and transformer-based applications.
+
+Q: Do you work with LLMs?
+A: Yes, I work with transformer models like T5 and FLAN-T5, and I’ve built systems using retrieval-augmented generation.
+
+---
+
+# CONTACT
+
+Email:
+lasiwasumit@gmail.com
+
+GitHub:
+https://github.com/Sumitlasiwa
+
+LinkedIn:
+https://www.linkedin.com/in/sumit-lasiwa-30ab86346/

@@ -1,18 +1,23 @@
 from langchain_core.runnables import RunnableParallel, RunnableLambda
 from operator import itemgetter
-from src.app.db.vector_db import get_retriever
-from src.app.utils.prompt_builder import chat_template
+from app.db.vector_db import get_retriever
+from app.utils.prompt_builder import chat_template
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
-from src.app.config import LLM_REPO_ID
+from app.config import get_settings
 from langchain_core.output_parsers import StrOutputParser
+from functools import lru_cache
 
-
-def rag_chain():
+settings = get_settings()
+@lru_cache(maxsize=1)
+def get_llm():
     chat_llm = HuggingFaceEndpoint(
-    repo_id=LLM_REPO_ID,
+    repo_id=settings.llm_repo_id,
     task="text-generation",
 )
-    llm = ChatHuggingFace(llm=chat_llm)
+    return ChatHuggingFace(llm=chat_llm)
+
+def rag_chain():
+    llm = get_llm()
     retriever = get_retriever()
     def format_docs(retrieved_docs):
         context_text = "\n\n".join(doc.page_content for doc in retrieved_docs)

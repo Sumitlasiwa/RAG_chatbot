@@ -1,5 +1,8 @@
-from src.app.services.rag_service import rag_chain
-from src.app.db.redis_client import get_history, save_message
+from app.services.rag_service import rag_chain, get_llm
+from app.db.redis_client import get_history, save_message
+from app.db.vector_db import get_embedding_model, get_retriever
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 from functools import lru_cache
 
 
@@ -15,11 +18,50 @@ def llm_generate(query, chat_history):
     "chat_history": chat_history
 })
 
+from typing import TypedDict, Annotated
+
+class IsChitchat(TypedDict):
+        
+        chat_type : Annotated[bool, "Return exactly one of: \
+            'True' for greetings or casual conversation/greetings/small talk, \
+            'False' for everything else"]
+        
+@lru_cache(maxsize=1)
+def get_chitchat_classifier():
+    return get_llm().with_structured_output(IsChitchat)
+
+def is_chitchat(query):
+    return get_chitchat_classifier().invoke(query)["chat_type"]
+
+def is_similar(query):
+    threshold = 0.60
+
+    embedding_model = get_embedding_model()
+    retriever = get_retriever()
+
+    docs = retriever.invoke(query)
+    if not docs:
+        return False
+
+    query_vector = embedding_model.embed_query(query)
+    doc_vectors = embedding_model.embed_documents(
+        [doc.page_content for doc in docs]
+    )
+
+    scores = cosine_similarity([query_vector], doc_vectors)[0]
+
+    return float(np.mean(scores)) >= threshold
+    
+
 def chat_pipeline(user_id, query):
     chat_history = get_history(user_id)
-    response = llm_generate(query, chat_history)
-    save_message(user_id, query, response)
     
+    if is_chitchat(query) or is_similar(query):
+        response = llm_generate(query, chat_history)
+    else:
+        response = "Question is out of my knowledge base. Let's talk about Sumit's portfolio"
+        
+    save_message(user_id, query, response)
     return response
+    
        
-# chat_pipeline(123, "What is my name and age ?")

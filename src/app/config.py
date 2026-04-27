@@ -1,18 +1,28 @@
-import os
-from dotenv import load_dotenv
+from functools import lru_cache
 
-load_dotenv()
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-MONGODB_URI = os.getenv("MONGODB_URI")
-PINECONE_TOKEN = os.getenv("PINECONE_TOKEN")
-REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-REDIS_DB = int(os.getenv("REDIS_DB", 0))
 
-PINECONE_INDEX_NAME = "documentstore"
-EMBEDDING_MODEL_NAME = "BAAI/bge-small-en-v1.5" #output_dimension = 384
-LLM_REPO_ID = "Qwen/Qwen2.5-7B-Instruct"
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=r"C:\Users\Lenovo\Desktop\Chatbot\.env", env_file_encoding="utf-8")
 
-CHUNK_SIZE = 800
-CHUNK_OVERLAP = 150
-BATCH_SIZE = 50
+    mongodb_uri: str
+    pinecone_token: str
+    redis_host: str = "localhost"
+    redis_port: int = 6379
+    redis_db: int = 0
+
+    pinecone_index_name: str = "documentstore"
+    embedding_model_name: str = "BAAI/bge-small-en-v1.5"
+    embedding_dimension: int = 384
+    llm_repo_id: str = "Qwen/Qwen2.5-7B-Instruct"
+    huggingfacehub_access_token: str | None = None
+
+    chunk_size: int = 800
+    chunk_overlap: int = 150
+    batch_size: int = 50
+
+
+@lru_cache(maxsize=1)
+def get_settings() -> Settings:
+    return Settings()

@@ -1,7 +1,8 @@
-from src.app.services.ingestion_service import ingest_document
-from src.app.config import CHUNK_SIZE, CHUNK_OVERLAP, BATCH_SIZE
+from app.services.ingestion_service import ingest_document
+from app.config import get_settings
 
 def main():
+    settings = get_settings()
     print("Type a file path to ingest, or 'exit' to quit.")
 
     while True:
@@ -17,9 +18,9 @@ def main():
         try:
             result = ingest_document(
                 file_path=file_path,
-                chunk_size=CHUNK_SIZE,
-                chunk_overlap=CHUNK_OVERLAP,
-                batch_size=BATCH_SIZE,
+                chunk_size=settings.chunk_size,
+                chunk_overlap=settings.chunk_overlap,
+                batch_size=settings.batch_size,
             )
             print(f"Ingestion completed: {result}")
         except Exception as exc:

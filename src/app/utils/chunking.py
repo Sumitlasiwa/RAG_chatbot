@@ -4,7 +4,7 @@ from langchain_core.documents import Document
 from typing import List
 
 
-def chunk_file(document, chunker: str = "RC", chunk_size=800, chunk_overlap=150) -> List[Document]:
+def chunk_file(document, chunker: str = "RC", chunk_size=250, chunk_overlap=40) -> List[Document]:
     """chunks single document file into multiple small chunks
 
     Args:
@@ -18,7 +18,8 @@ def chunk_file(document, chunker: str = "RC", chunk_size=800, chunk_overlap=150)
     """
     
     if chunker == "RC":
-        splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap,
+        separators=["---", "#", "\n\n"])
     elif chunker == "C":
         splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap, separator='')
         

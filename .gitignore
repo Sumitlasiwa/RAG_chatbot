@@ -2,3 +2,4 @@
 books/
 notebooks/
 .env
+__pycache__/

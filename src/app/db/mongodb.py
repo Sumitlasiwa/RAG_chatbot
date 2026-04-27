@@ -1,11 +1,12 @@
 from functools import lru_cache
-from src.app.config import MONGODB_URI as uri
+from app.config import get_settings
 from pymongo import MongoClient
 
 
+settings = get_settings()
 @lru_cache(maxsize=1)
 def get_mongodb_collection():
-    
+    uri = settings.mongodb_uri
     if not uri:
         raise ValueError("MongoDB_URI is not configured")
     
