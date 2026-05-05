@@ -12,6 +12,3 @@ httpx
 python-dotenv
 
 pypdf
-langchain==0.2.11
-langchain-community==0.2.11
-langchain-pinecone==0.1.3
