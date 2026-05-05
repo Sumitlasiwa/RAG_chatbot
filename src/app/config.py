@@ -1,7 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -22,7 +22,13 @@ class Settings(BaseSettings):
     embedding_model_name: str = "BAAI/bge-small-en-v1.5"
     embedding_dimension: int = 384
     llm_repo_id: str = "Qwen/Qwen2.5-7B-Instruct"
-    huggingfacehub_access_token: str
+    huggingfacehub_api_token: str = Field(
+        validation_alias=AliasChoices(
+            "HUGGINGFACEHUB_API_TOKEN",
+            "HUGGINGFACEHUB_ACCESS_TOKEN",
+            "HF_TOKEN",
+        )
+    )
 
     chunk_size: int = 400
     chunk_overlap: int = 50

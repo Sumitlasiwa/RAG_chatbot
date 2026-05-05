@@ -11,9 +11,10 @@ settings = get_settings()
 @lru_cache(maxsize=1)
 def get_llm():
     chat_llm = HuggingFaceEndpoint(
-    repo_id=settings.llm_repo_id,
-    task="text-generation",
-)
+        repo_id=settings.llm_repo_id,
+        task="text-generation",
+        huggingfacehub_api_token=settings.huggingfacehub_api_token,
+    )
     return ChatHuggingFace(llm=chat_llm)
 
 def rag_chain():
