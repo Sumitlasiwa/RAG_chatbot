@@ -4,11 +4,10 @@ import redis
 from app.config import get_settings
 from functools import lru_cache
 settings = get_settings()
+
 @lru_cache(maxsize=1)
 def get_redis_client():
-    return redis.Redis(host=settings.redis_host,
-                       port=settings.redis_port,
-                       db=settings.redis_db)
+    return redis.from_url(settings.redis_url)
 
 def save_message(user_id, query, response):
     r = get_redis_client()

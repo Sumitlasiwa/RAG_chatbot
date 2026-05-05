@@ -1,16 +1,22 @@
 from functools import lru_cache
+from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+BASE_DIR = Path(__file__).resolve().parents[2]
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=r"C:\Users\Lenovo\Desktop\Chatbot\.env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(
+        env_file=BASE_DIR / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
-    mongodb_uri: str
-    pinecone_token: str
-    redis_host: str = "localhost"
-    redis_port: int = 6379
-    redis_db: int = 0
+    mongodb_uri: str = Field(alias="MONGODB_URI")
+    pinecone_token: str = Field(alias="PINECONE_TOKEN")
+    redis_url: str = Field(alias="REDIS_URL")
 
     pinecone_index_name: str = "documentstore"
     embedding_model_name: str = "BAAI/bge-small-en-v1.5"
@@ -18,8 +24,8 @@ class Settings(BaseSettings):
     llm_repo_id: str = "Qwen/Qwen2.5-7B-Instruct"
     huggingfacehub_access_token: str | None = None
 
-    chunk_size: int = 800
-    chunk_overlap: int = 150
+    chunk_size: int = 400
+    chunk_overlap: int = 50
     batch_size: int = 50
 
 

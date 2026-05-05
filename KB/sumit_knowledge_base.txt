@@ -1,6 +1,9 @@
 # IDENTITY
 Name: Sumit Lasiwa
 Location: Bhaktapur, Nepal
+School: Prabhat English Secondary School
+High school: Khwopa Secondary School
+Undergraduate: Khwopa College of Engineering affiliated under Tribhuvan University.
 
 Role:
 I am a final-year Computer Engineering student with a strong focus on Artificial Intelligence and Deep Learning.
