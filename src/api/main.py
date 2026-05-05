@@ -3,7 +3,7 @@ from app.services.chat_service import chat_pipeline
 from schemas.chat import ChatRequest, ChatResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-
+ 
 app = FastAPI(title="Personal chatbot")
 
 app.add_middleware(
