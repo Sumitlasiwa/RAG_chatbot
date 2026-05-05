@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     redis_url: str = Field(alias="REDIS_URL")
 
     pinecone_index_name: str = "documentstore"
-    embedding_model_name: str = "BAAI/bge-small-en-v1.5"
+    embedding_model_name: str = "llama-text-embed-v2"
     embedding_dimension: int = 384
     llm_repo_id: str = "Qwen/Qwen2.5-7B-Instruct"
     huggingfacehub_api_token: str = Field(

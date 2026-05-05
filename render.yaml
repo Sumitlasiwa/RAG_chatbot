@@ -22,7 +22,7 @@ services:
       - key: PINECONE_INDEX_NAME
         value: documentstore
       - key: EMBEDDING_MODEL_NAME
-        value: BAAI/bge-small-en-v1.5
+        value: llama-text-embed-v2
       - key: EMBEDDING_DIMENSION
         value: "384"
       - key: LLM_REPO_ID
