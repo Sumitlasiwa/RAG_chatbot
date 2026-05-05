@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: personal-chatbot-api
+    runtime: python
+    plan: free
+    autoDeploy: true
+    rootDir: .
+    buildCommand: pip install -r requirements.txt
+    startCommand: PYTHONPATH=src uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: MONGODB_URI
+        sync: false
+      - key: PINECONE_TOKEN
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: HUGGINGFACEHUB_ACCESS_TOKEN
+        sync: false
+      - key: PINECONE_INDEX_NAME
+        value: documentstore
+      - key: EMBEDDING_MODEL_NAME
+        value: BAAI/bge-small-en-v1.5
+      - key: EMBEDDING_DIMENSION
+        value: "384"
+      - key: LLM_REPO_ID
+        value: Qwen/Qwen2.5-7B-Instruct
+      - key: CHUNK_SIZE
+        value: "400"
+      - key: CHUNK_OVERLAP
+        value: "50"
+      - key: BATCH_SIZE
+        value: "50"
