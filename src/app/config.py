@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     embedding_model_name: str = "BAAI/bge-small-en-v1.5"
     embedding_dimension: int = 384
     llm_repo_id: str = "Qwen/Qwen2.5-7B-Instruct"
-    huggingfacehub_access_token: str | None = None
+    huggingfacehub_access_token: str
 
     chunk_size: int = 400
     chunk_overlap: int = 50
