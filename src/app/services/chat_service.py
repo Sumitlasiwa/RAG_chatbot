@@ -1,8 +1,6 @@
 from app.services.rag_service import rag_chain, get_llm
 from app.db.redis_client import get_history, save_message
-from app.db.vector_db import get_embedding_model, get_retriever
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
+from app.db.vector_db import get_retriever
 from functools import lru_cache
 
 
@@ -34,23 +32,9 @@ def is_chitchat(query):
     return get_chitchat_classifier().invoke(query)["chat_type"]
 
 def is_similar(query):
-    threshold = 0.60
-
-    embedding_model = get_embedding_model()
     retriever = get_retriever()
-
     docs = retriever.invoke(query)
-    if not docs:
-        return False
-
-    query_vector = embedding_model.embed_query(query)
-    doc_vectors = embedding_model.embed_documents(
-        [doc.page_content for doc in docs]
-    )
-
-    scores = cosine_similarity([query_vector], doc_vectors)[0]
-
-    return float(np.mean(scores)) >= threshold
+    return bool(docs)
     
 
 def chat_pipeline(user_id, query):
