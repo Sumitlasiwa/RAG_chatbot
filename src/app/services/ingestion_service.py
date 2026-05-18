@@ -10,7 +10,7 @@ from app.config import get_settings
 from pymongo import ReplaceOne
 
 settings = get_settings()
-def ingest_document(file_path: str, chunk_size = settings.chunk_size, chunk_overlap = settings.chunk_overlap, batch_size = settings.batch_size) -> dict: 
+def ingest_document(file_path: str, chunker: str = "RC", chunk_size = settings.chunk_size, chunk_overlap = settings.chunk_overlap, batch_size = settings.batch_size) -> dict: 
     """takes text or pdf file then does loading, chunking and saving  in batches chunks in vector db and nosql db
 
     Args:
@@ -29,7 +29,7 @@ def ingest_document(file_path: str, chunk_size = settings.chunk_size, chunk_over
         raise ValueError(f"No content loaded from file: {file_path}")
     
     # Chunk document
-    chunks = chunk_file(document=document, chunker="RC", chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    chunks = chunk_file(document=document, chunker=chunker, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     if not chunks:
         raise ValueError(f"No chunks generated from file: {file_name}")
     

@@ -50,7 +50,6 @@ Make sure these are available before running the project:
 - MongoDB
 - Redis
 - Pinecone account and API key
-- A Pinecone index created in advance
 - Hugging Face access token for the configured LLM
 
 ## Installation
@@ -89,6 +88,8 @@ MONGODB_URI=your_mongodb_connection_string
 PINECONE_TOKEN=your_pinecone_api_key
 REDIS_URL=redis://localhost:6379/0
 PINECONE_INDEX_NAME=documentstore
+PINECONE_CLOUD=aws
+PINECONE_REGION=us-east-1
 EMBEDDING_MODEL_NAME=llama-text-embed-v2
 EMBEDDING_DIMENSION=384
 LLM_REPO_ID=Qwen/Qwen2.5-7B-Instruct
@@ -101,7 +102,8 @@ BATCH_SIZE=50
 Notes:
 
 - `HUGGINGFACEHUB_ACCESS_TOKEN` and `HF_TOKEN` are also accepted for the Hugging Face token.
-- The Pinecone index must already exist and its dimension must match `EMBEDDING_DIMENSION`.
+- The ingestion CLI can create the Pinecone index automatically if it does not exist yet.
+- The Pinecone index dimension must match `EMBEDDING_DIMENSION`.
 
 ## Running the Project
 
