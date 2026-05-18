@@ -8,7 +8,7 @@ app = FastAPI(title="Personal chatbot")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500", "https://sumitlasiwa.com.np"],
+    allow_origins=["http://127.0.0.1:5500", "https://sumitlasiwa.com.np", "http://localhost:5500", "https://www.sumitlasiwa.com.np"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
