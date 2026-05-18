@@ -1,5 +1,5 @@
 from functools import lru_cache
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.embeddings import Embeddings
 from app.config import get_settings
@@ -55,14 +55,12 @@ def get_embedding_model():
     )
 
 
-@lru_cache(maxsize=1)
-def get_vectorstore():
-    pc = get_pinecone_client()
-
+def _validate_index_dimension(pc: Pinecone) -> None:
     if not pc.has_index(settings.pinecone_index_name):
         raise ValueError(
             f"Pinecone index '{settings.pinecone_index_name}' does not exist. "
-            "Create it before starting the API."
+            "Create it before starting the API or run the ingestion CLI to "
+            "create it automatically."
         )
 
     index_description = pc.describe_index(settings.pinecone_index_name)
@@ -72,6 +70,37 @@ def get_vectorstore():
             f"{index_description.dimension}, but EMBEDDING_DIMENSION is "
             f"{settings.embedding_dimension}."
         )
+
+
+def ensure_pinecone_index(create_if_missing: bool = False) -> None:
+    pc = get_pinecone_client()
+
+    if not pc.has_index(settings.pinecone_index_name):
+        if not create_if_missing:
+            raise ValueError(
+                f"Pinecone index '{settings.pinecone_index_name}' does not exist. "
+                "Create it before starting the API or run the ingestion CLI to "
+                "create it automatically."
+            )
+
+        pc.create_index(
+            name=settings.pinecone_index_name,
+            dimension=settings.embedding_dimension,
+            metric="cosine",
+            spec=ServerlessSpec(
+                cloud=settings.pinecone_cloud,
+                region=settings.pinecone_region,
+            ),
+            timeout=300,
+        )
+
+    _validate_index_dimension(pc)
+
+
+@lru_cache(maxsize=1)
+def get_vectorstore():
+    pc = get_pinecone_client()
+    _validate_index_dimension(pc)
 
     vector_store = PineconeVectorStore(
         index=pc.Index(settings.pinecone_index_name),

@@ -18,10 +18,18 @@ class Settings(BaseSettings):
     pinecone_token: str = Field(alias="PINECONE_TOKEN")
     redis_url: str = Field(alias="REDIS_URL")
 
-    pinecone_index_name: str = "documentstore"
-    embedding_model_name: str = "llama-text-embed-v2"
-    embedding_dimension: int = 384
-    llm_repo_id: str = "Qwen/Qwen2.5-7B-Instruct"
+    pinecone_index_name: str = Field(
+        default="documentstore",
+        alias="PINECONE_INDEX_NAME",
+    )
+    pinecone_cloud: str = Field(default="aws", alias="PINECONE_CLOUD")
+    pinecone_region: str = Field(default="us-east-1", alias="PINECONE_REGION")
+    embedding_model_name: str = Field(
+        default="llama-text-embed-v2",
+        alias="EMBEDDING_MODEL_NAME",
+    )
+    embedding_dimension: int = Field(default=384, alias="EMBEDDING_DIMENSION")
+    llm_repo_id: str = Field(default="Qwen/Qwen2.5-7B-Instruct", alias="LLM_REPO_ID")
     huggingfacehub_api_token: str = Field(
         validation_alias=AliasChoices(
             "HUGGINGFACEHUB_API_TOKEN",
@@ -30,9 +38,9 @@ class Settings(BaseSettings):
         )
     )
 
-    chunk_size: int = 400
-    chunk_overlap: int = 50
-    batch_size: int = 50
+    chunk_size: int = Field(default=400, alias="CHUNK_SIZE")
+    chunk_overlap: int = Field(default=50, alias="CHUNK_OVERLAP")
+    batch_size: int = Field(default=50, alias="BATCH_SIZE")
 
 
 @lru_cache(maxsize=1)

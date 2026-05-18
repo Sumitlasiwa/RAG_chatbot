@@ -5,7 +5,7 @@ from tqdm import tqdm
 from app.utils.file_loader import load_file
 from app.utils.chunking import chunk_file
 from app.db.mongodb import get_mongodb_collection
-from app.db.vector_db import get_vectorstore
+from app.db.vector_db import ensure_pinecone_index, get_vectorstore
 from app.config import get_settings
 from pymongo import ReplaceOne
 
@@ -36,6 +36,7 @@ def ingest_document(file_path: str, chunk_size = settings.chunk_size, chunk_over
     
     # save vector to vectordb and metadata to NoSQL db for each batch of chunks
     
+    ensure_pinecone_index(create_if_missing=True)
     vector_store = get_vectorstore()            # vector db connect
     collection = get_mongodb_collection()       # connect to mongodb and get collection
     
